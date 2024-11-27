@@ -1,3 +1,4 @@
+import menus.*
 import miscelaneos.*
 import muros.*
 import enemigos.*
@@ -7,57 +8,15 @@ object niveles{
     const property listaBloques = []
     const property listaEnemigos = []
     var property nivel = 0
+    var property niveles_cargados = [nivel_1, nivel_2, nivel_3] 
 
-    const nivel1 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,n,b,b,b,n,n,n,n,n,e,n,n,b,b,b,n,n],
-                    [n,n,b,n,b,n,n,n,n,n,n,n,n,b,n,b,n,n],
-                    [n,n,b,n,b,n,n,n,n,n,n,n,n,b,n,b,n,n],
-                    [n,n,b,e,b,n,n,n,n,n,n,n,n,b,n,b,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,b,b,b,b,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n],
-                    [n,n,n,b,n,n,n,n,b,b,n,n,n,n,b,n,n,n],
-                    [n,n,n,n,b,b,n,n,b,b,n,n,b,b,n,n,n,n],
-                    [n,n,n,n,n,n,b,b,n,n,b,b,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,e,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,n]]
-                    
-    const nivel2 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,b,b,b,n,n,n,n,n,n,n,n,b,b,b,n,n,n],
-                    [n,b,n,n,n,n,n,n,b,n,n,n,n,n,b,n,n,n],
-                    [n,b,n,n,n,n,n,n,b,b,b,b,n,n,n,n,n,n],
-                    [n,b,b,b,n,n,n,n,n,n,n,b,n,n,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,b,n,n,b,n,n,n],
-                    [n,n,n,n,n,b,b,b,n,n,n,b,n,n,b,n,n,n],
-                    [n,n,n,n,n,b,n,b,n,n,n,b,n,n,b,n,n,n],
-                    [n,b,n,n,n,n,n,b,n,n,n,b,n,n,b,n,n,n],
-                    [n,b,n,n,n,n,n,b,n,n,n,b,b,b,b,n,n,n],
-                    [n,b,n,n,b,n,n,b,n,n,n,n,n,n,n,n,n,n],
-                    [n,b,n,n,b,n,n,b,n,n,n,n,n,n,n,b,n,n],
-                    [n,b,n,n,b,b,b,b,n,n,n,n,n,n,n,n,n,n],
-                    [n,b,n,n,n,n,n,n,n,n,n,n,n,b,n,n,n,n],
-                    [n,n,n,n,n,b,b,b,b,b,b,b,b,b,n,n,n,n],
-                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
-                    [n,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,n]]
-
-    method entregarFila(fila, nivelPedido) = if(nivelPedido == 0) nivel1.get(fila) else nivel2.get(fila)
-
-    method generarEscenario(){
-        (16 .. 0).forEach({y => const listaAux = self.entregarFila(17-y, nivel)
-						        (0..17).forEach({x => const aux = listaAux.get(x)
-								 			          aux.decodificar(x, y)})
-                                                      })
-    }
-    method generarBloquesSuperiores(){//para crear la ilusion de que el jugador está detrás del bloque
-        (16 .. 0).forEach({y => const listaAux = self.entregarFila(17-y, nivel)
-						        (0..17).forEach({x => const aux = listaAux.get(x) aux.decodificarSuperior(x, y)})
-					    })
+    method generarEscenario(nivel_mapa){
+       (16 .. 0).forEach({
+            y =>
+            (0..17).forEach({
+                x => nivel_mapa.get(y).get(x).decodificar(x, y)
+                })
+        })
     }
 
     method activarEnemigos() = listaEnemigos.forEach({enemigo => enemigo.activar_enemigo()})
@@ -80,7 +39,19 @@ object niveles{
     method sacarBloqueDeLista(block) = listaBloques.remove(block)
 
     method enlistarEnemigo(enemigo) = listaEnemigos.add(enemigo)
-    method quitarEnemigo(enemigo) = listaEnemigos.remove(enemigo)
+    method quitarEnemigo(enemigo){ 
+        listaEnemigos.remove(enemigo)
+        if(listaEnemigos.size() == 0) sincronizadorDePantallas.cambiarPantalla("ganador")
+    }
+
+    method devolver_nivel() = niveles_cargados.get(nivel)
+
+    method sacar_todo(){
+        listaPosiciones.clear()
+        listaPuntos.clear()
+        listaBloques.clear()
+        listaEnemigos.clear()
+    }
 }
 
 object b {
@@ -89,17 +60,89 @@ object b {
         niveles.listaPosiciones().add(game.at(x,y)) 
         new Bloque().ubicarYDibujar(x,y)
     }
-    method decodificarSuperior(x,y) = new BloqueSuperior().ubicarYDibujar(x, y)
 }
 
 object n {
     method decodificar(x,y) {}
-    method decodificarSuperior(x,y){}
 }
 
 object e{
     method decodificar(x, y){
-        niveles.enlistarEnemigo(new Enemigo1(vida = 100, position = game.at(x, y)))
+        niveles.enlistarEnemigo(new Enemigo1(vida = 50, x_inicial = x, y_inicial = y))
     }
-    method decodificarSuperior(x,y){}
+}
+
+object nivel_1{
+    const nivel1 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,b,b,b,n,n,n,n,n,e,n,n,b,b,b,n,n],
+                    [n,n,b,n,b,n,n,n,n,n,n,n,n,b,n,b,n,n],
+                    [n,n,b,n,b,n,n,n,n,n,n,n,n,b,n,b,n,n],
+                    [n,n,b,e,b,n,n,n,n,n,n,n,n,b,n,b,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,b,b,b,b,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n],
+                    [n,n,n,b,n,n,n,n,b,b,n,n,n,n,b,n,n,n],
+                    [n,n,n,n,b,b,n,n,b,b,n,n,b,b,n,n,n,n],
+                    [n,n,n,n,n,n,b,b,n,n,b,b,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,e,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,n]]
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel1)
+    }
+}
+
+object nivel_2{
+    const nivel2 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,b,b,n,n,n,n,n,n,n,n,b,b,b,n,n,n],
+                    [n,b,n,n,n,n,n,n,b,n,n,n,n,n,b,n,n,n],
+                    [n,b,n,n,n,n,n,n,b,b,b,b,n,n,n,n,n,n],
+                    [n,b,b,b,n,n,n,n,n,n,n,b,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,b,n,n,b,n,n,n],
+                    [n,n,n,n,n,b,b,b,n,n,n,b,n,n,b,n,n,n],
+                    [n,n,n,n,n,b,n,b,n,n,n,b,n,n,b,n,n,n],
+                    [n,b,n,n,n,n,n,b,n,n,n,b,n,n,b,n,n,n],
+                    [n,b,n,n,n,n,n,b,n,n,n,b,b,b,b,n,n,n],
+                    [n,b,n,n,b,n,n,b,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,n,n,b,n,n,b,n,n,n,n,n,n,n,b,n,n],
+                    [n,b,n,n,b,b,b,b,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,n,n,n,n,n,n,n,n,n,n,n,b,n,n,n,n],
+                    [n,n,n,n,n,b,b,b,b,b,b,b,b,b,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,n]]
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel2)
+    }
+}
+
+object nivel_3{
+    const nivel3 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,b,b,n,n,n,n,n,n,n,n,b,b,b,n,n,n],
+                    [n,b,n,n,n,n,n,n,b,n,n,n,n,n,b,n,n,n],
+                    [n,b,n,n,n,n,n,n,b,b,b,b,n,n,n,n,n,n],
+                    [n,b,b,b,n,n,n,n,n,n,n,b,n,n,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,b,n,n,b,n,n,n],
+                    [n,n,n,n,n,b,b,b,n,n,n,b,n,n,b,n,n,n],
+                    [n,n,n,n,n,b,n,b,n,n,n,b,n,n,b,n,n,n],
+                    [n,b,n,n,n,n,n,b,n,n,n,b,n,n,b,n,n,n],
+                    [n,b,n,n,n,n,n,b,n,n,n,b,b,b,b,n,n,n],
+                    [n,b,n,n,b,n,n,b,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,n,n,b,n,n,b,n,n,n,n,n,n,n,b,n,n],
+                    [n,b,n,n,b,b,b,b,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,n,n,n,n,n,n,n,n,n,n,n,b,n,n,n,n],
+                    [n,n,n,n,n,b,b,b,b,b,b,b,b,b,n,n,n,n],
+                    [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                    [n,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,b,n]]
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel3)
+    }
 }

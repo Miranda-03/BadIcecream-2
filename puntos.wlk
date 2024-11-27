@@ -26,6 +26,9 @@ class Punto{
 	method eliminarPunto(){
 		game.removeVisual(self)
 	}
+
+	method accion(_){}
+	method atacado(_){}
 }
 
 object spawn{

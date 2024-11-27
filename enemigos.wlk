@@ -6,40 +6,42 @@ import movimiento.*
 import jugador.*
 import menus.*
 
-class Enemigo1 inherits FiguraConMovimiento(position = new PosicionVariable(x = 7, y = 13)){
+class Enemigo1{
     
     var property vida
-    const property posiblePosicion = new PosicionVariable(x = 7, y = 13)
+    var property velocidad = 200
+    var property y_inicial
+    var property x_inicial  
+    var property position = new PosicionVariable(x = x_inicial, y = y_inicial)
     method image() = aparienciaEnemigo.valor()
+    var property direccion = moverDerecha 
 
-    method nuevaPosicion(){
-        const direccion = 1.randomUpTo(4).round() //elige al azar una dirección
-        //le da el valor correspondiente
-        if(direccion == 1){ //arriba
-            self.posiblePosicion().sumarPos(0, 1)
-        }
-        if(direccion == 2){ //abajo
-            self.posiblePosicion().sumarPos(0, -1)
-        }
-        if(direccion == 3){ //derecha
-            self.posiblePosicion().sumarPos(1, 0)
-        }
-
-        if(direccion == 4){ //izquierda
-            self.posiblePosicion().sumarPos(-1, 0)
-        }
-            //revisa si la posicion es la de un bloque
-        if(niveles.mismaPosicion(self.posiblePosicion()) || !self.equisCorrecta(self.posiblePosicion().x()) || !self.yeCorrecta(self.posiblePosicion().y())){ //si es rehace el mensaje
-            self.posiblePosicion().establecerPos(self.position().x(), self.position().y())
-            self.nuevaPosicion()
-        } 
-        else{ //sino devuelve la posicion nueva
-                self.position().establecerPos(posiblePosicion.x(), posiblePosicion.y())
-        }
+    method movimiento(){
+        game.onTick(velocidad, self, {
+            self.direccion().mover(position)
+            if(niveles.mismaPosicion(position) || !(position.x() >= 1 && position.x() <= (game.width()-2) && position.y() >= 1 && position.y() <= (game.height()-2))){
+                self.direccion().retroceder(position)
+                self.direccion(cambiarDireccion.rotarDireccion(self.direccion()))
+            }
+        })
     }
 
-    method caminar(){
-        game.onTick(300, self, {self.nuevaPosicion()})
+    method activar_enemigo() {
+      game.addVisual(self)
+	  self.movimiento()
+    }
+
+    method limpiarEnemigos(){
+        game.removeVisual(self)
+    }
+
+    method atacado(bala){
+        bala.impacto(1)
+        self.herido()
+    }
+
+    method accion(jugador) {
+      jugador.impactado()
     }
 
     method herido() {
@@ -50,15 +52,8 @@ class Enemigo1 inherits FiguraConMovimiento(position = new PosicionVariable(x = 
     }
 
     method morir(){
-        sincronizadorDePantallas.cambiarPantalla("ganador")
-    }
-
-    method aparecer(){
-        game.addVisual(self)
-    }
-
-    method limpiarEnemigos(){
         game.removeVisual(self)
+        niveles.quitarEnemigo(self)
     }
 }
 

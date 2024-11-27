@@ -21,23 +21,23 @@ object finDelJuego{
 }
 
 object moverAbajo{
-    method mover(posicion) = posicion.down(1)
-    method retroceder(posicion) = posicion.down(-1) 
+    method mover(posicion) {posicion.goDown(1)}
+    method retroceder(posicion) {posicion.goDown(-1) }
 }
 
 object moverArriba{
-    method mover(posicion) = posicion.up(1)
-    method retroceder(posicion) = posicion.up(-1)
+    method mover(posicion) {posicion.goUp(1)}
+    method retroceder(posicion) {posicion.goUp(-1)}
 }
 
 object moverDerecha{
-    method mover(posicion) = posicion.right(1)
-    method retroceder(posicion) = posicion.right(-1)
+    method mover(posicion){ posicion.goRight(1)}
+    method retroceder(posicion) { posicion.goRight(-1)}
 }
 
 object moverIzquierda{
-    method mover(posicion) = posicion.left(1)
-    method retroceder(posicion) = posicion.left(-1)
+    method mover(posicion)  {posicion.goLeft(1)}
+    method retroceder(posicion) {posicion.goLeft(-1)}
 }
 
 object cambiarDireccion{

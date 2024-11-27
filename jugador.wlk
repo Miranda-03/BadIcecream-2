@@ -14,12 +14,18 @@ class Jugador inherits FiguraConMovimiento(position = new PosicionVariable(x = 1
   method posicionate(){
     self.position(game.at(1, 1))
     game.addVisualCharacter(self)
+    self.colisionar()
+    modificadorMapa.jugador(self)
+    game.showAttributes(self)
+    modificadorMapa.eventosDelTeclado()
+    self.eventosDelTecladoParaAtacar()
   }
 
   method volver(){
     if(sincronizadorDePantallas.pantallaActual() == "jugar"){
       musica.sonido_continue()
       game.addVisualCharacter(self)
+      self.colisionar()
     }
   }
 
@@ -40,6 +46,17 @@ class Jugador inherits FiguraConMovimiento(position = new PosicionVariable(x = 1
     self.eliminate() //no debería ir acá, pero es donde mejor anda
     sincronizadorDePantallas.cambiarPantalla("perdedor") 
     new MenuPerdiste().cargar()
+  }
+
+  method colisionar(){
+    game.onCollideDo(self, {
+      element => element.accion(self)
+    })
+  }
+
+  method eventosDelTecladoParaAtacar(){
+    keyboard.e().onPressDo({if(sincronizadorDePantallas.habilitar()) {atajos.jugador().atacarDerecha()}})
+    keyboard.q().onPressDo({if(sincronizadorDePantallas.habilitar()) {atajos.jugador().atacarIzquierda()}})
   }
 
   method atacarDerecha() = new AtaqueDerecho().energia(self.position(), datosJugador.imagen_atacando_derecha(), 1)
@@ -67,6 +84,13 @@ object personajeAtacando {
   
   method impactado(){
     sincronizadorDePantallas.cambiarPantalla("perdedor") 
+    self.eliminate()
+  }
+
+  method colisionar(){
+    game.onCollideDo(self, {
+      element => element.accion(self)
+    })
   }
 
   method eliminate(){
@@ -89,21 +113,28 @@ class AtaqueDerecho{
   method image() = datosJugador.imagen_ataque_derecho()
 
   method impactado() {
-    atajos.enemigo().herido()
-    self.impacto(1)
+    impacto = 1
+  }
+
+  method colision_impacto(){
+    game.onCollideDo(self, {
+      element => element.atacado(self)
+    })
   }
 
   method energia(posicion, lado, valor){
     personajeAtacando.lado(lado)
     personajeAtacando.position().establecerPos(posicion.x(), posicion.y())
     position.establecerPos(posicion.x() + valor, posicion.y())
+    personajeAtacando.colisionar()
+    self.colision_impacto()
     if(!niveles.mismaPosicion(self.position())){
       self.efectoSonoro()
       game.addVisual(personajeAtacando)
       personaje = atajos.jugador()
       atajos.jugador().eliminate()
       game.addVisual(self)
-      game.schedule(500, {self.avanzar()})
+      game.schedule(200, {self.avanzar()})
     }
   }
 
@@ -112,7 +143,7 @@ class AtaqueDerecho{
   method avanzar(){
     if(!niveles.mismaPosicion(game.at(position.x() + 1, position.y())) && position.x() + 1 < game.width() - 1 && impacto < 1 && sincronizadorDePantallas.pantallaActual() != "perdedor"){
       position.goRight(1)
-      game.schedule(500, {self.avanzar()})
+      game.schedule(200, {self.avanzar()})
     }
     else{
       const jugador = new Jugador()
@@ -144,7 +175,7 @@ class AtaqueIzquierdo inherits AtaqueDerecho{
   override method avanzar(){
     if(!niveles.mismaPosicion(game.at(position.x() - 1, position.y())) && position.x() - 1 > 0 && impacto < 1 && sincronizadorDePantallas.pantallaActual() != "perdedor"){
       position.goLeft(1)
-      game.schedule(500, {self.avanzar()})
+      game.schedule(200, {self.avanzar()})
     }
     else{
       const jugador = new Jugador()
@@ -180,27 +211,39 @@ object points{
   method image() = "barra.png"
 }
 
-object modificadorMapa inherits MutablePosition{
+object modificadorMapa{
 
-    var property position = null
+    var property jugador = null   
+    var property position = new PosicionVariable(x = 1, y = 1)
     var property estado_accion = ponerBloque
+    var property activo = true
 
     method modBloques(direccion) {
+      if(activo){
       game.removeTickEvent("mover-puntero")
-      self.position(atajos.jugador().position())
+      self.position().establecerPos(jugador.position().x(), jugador.position().y())
       self.detectarSiguientePosicionValida(direccion)
+      }
+      else self.removerPuntero()
     }
 
     method detectarSiguientePosicionValida(direccion){
-        self.position(direccion.mover(self.position()))
+        direccion.mover(self.position())
 
         if(niveles.mismaPosicion(self.position())) self.estado_accion(quitarBloque)
         self.estado_accion().realizarAccion(self.position())
 
         game.onTick(100, "mover-puntero", {
-          self.position(direccion.mover(self.position()))
+          direccion.mover(self.position())
           self.estado_accion().realizarAccion(self.position())
         })
+    }
+
+    method eventosDelTeclado() {
+      keyboard.d().onPressDo({ self.modBloques(moverDerecha) })
+      keyboard.s().onPressDo({ self.modBloques(moverAbajo) })
+      keyboard.a().onPressDo({ self.modBloques(moverIzquierda) })
+      keyboard.w().onPressDo({ self.modBloques(moverArriba) })
     }
 
     method removerPuntero() {
@@ -213,7 +256,6 @@ object ponerBloque{
   method realizarAccion(posicion){
     if(!niveles.mismaPosicion(posicion) && posicion.x() >= 1 && posicion.x() <= (game.width()-2) && posicion.y() >= 1 && posicion.y() <= (game.height()-2)){
       b.decodificar(posicion.x(), posicion.y())
-      new BloqueSuperior().ubicarYDibujar(posicion.x(), posicion.y())
     }
     else{
       modificadorMapa.removerPuntero()
@@ -225,7 +267,6 @@ object quitarBloque {
   method realizarAccion(posicion) {
     if(niveles.mismaPosicion(posicion) && posicion.x() >= 1 && posicion.x() <= (game.width()-2) && posicion.y() >= 1 && posicion.y() <= (game.height()-2)){
       niveles.quitarPosicion(posicion)
-      game.getObjectsIn(posicion).get(game.getObjectsIn(posicion).size() - 1).quitarBloque()
       game.getObjectsIn(posicion).get(game.getObjectsIn(posicion).size() - 1).quitarBloque()
     }
     else{

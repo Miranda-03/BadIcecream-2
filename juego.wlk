@@ -9,37 +9,34 @@ import niveles.*
 object juego{
 //DIBUJO DE LOS ELEMENTOS DEL MUNDO    
 	method jugar(){ 
+		game.clear()
         points.reset()
+		niveles.sacar_todo()
 		//dibujar fondo
 		game.addVisual(fondoJuego)
 		//dibujar muros
-		niveles.generarEscenario()
+		niveles.devolver_nivel().crear_nivel()
 		//dibujar enemigo
-		const jugador = new Jugador(valor = datosJugador.imagen())
-		//dibujar jugador
-		jugador.posicionate()
-		game.showAttributes(jugador)
+		//const jugador = new 
+		new Jugador(valor = datosJugador.imagen()).posicionate()
 		//dibujar frutas
 		spawn.dibujarPuntos(1)
-		//dibujar superior
-		niveles.generarBloquesSuperiores()
 		//dibujar puntos
 		game.addVisual(points)
 		//Activar el movimiento del enemigo 
-		const enemigo = new Enemigo1(vida = 150)
-		enemigo.aparecer()
-		enemigo.caminar()
-		game.onCollideDo(atajos.enemigo(), {elemento => elemento.impactado()})
+		niveles.activarEnemigos()
+		// game.onCollideDo(atajos.enemigo(), {elemento => elemento.impactado()})
 		//niveles.activarEnemigos()
 		musica.sonido_continue()
 	}
 
 //BORRAR ELEMENTOS DEL JUEGO
     method limpiar(){
-		atajos.enemigo().limpiarEnemigos()
+		if(niveles.listaEnemigos().size() > 0) atajos.enemigo().limpiarEnemigos()
 		game.removeVisual(fondoJuego)
 		game.removeVisual(points)
 		niveles.limpiarEscenario()
+		game.clear()
     }
 
     method cargarVisuales(posicion){
