@@ -8,7 +8,7 @@ object niveles{
     const property listaBloques = []
     const property listaEnemigos = []
     var property nivel = 0
-    var property niveles_cargados = [nivel_1, nivel_2, nivel_3] 
+    var property niveles_cargados = [nivel_1, nivel_2, nivel_3, nivel_4, nivel_5, nivel_6, nivel_7, nivel_8] 
 
     method generarEscenario(nivel_mapa){
        (16 .. 0).forEach({
@@ -144,5 +144,140 @@ object nivel_3{
 
     method crear_nivel(){
        niveles.generarEscenario(nivel3)
+    }
+}
+
+object nivel_4{
+const nivel4 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,b,n,n,n,n,n,n,n,n,n,b,n,e,n,n],
+                [n,b,n,b,b,n,n,e,n,n,n,n,n,b,n,n,n,n],
+                [n,b,n,n,b,n,n,n,n,n,n,n,n,b,n,n,n,n],
+                [n,b,b,b,b,b,n,n,n,b,b,b,b,b,b,b,b,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,b,b,b,b,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,n,n,b,n,n,n,n,n,b,n,e,n,n],
+                [n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n,n],
+                [n,b,b,b,b,b,n,b,n,n,n,n,n,n,n,n,n,n],
+                [n,b,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n,n],
+                [n,b,n,n,n,n,n,b,b,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n]];
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel4)
+    }
+}
+
+object nivel_5{
+const nivel5 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,b,b,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,b,n,n,b,n,n,n,e,n,n,n,n,b,n,n,n],
+                [n,n,b,n,n,b,b,b,n,n,n,n,n,n,b,n,n,n],
+                [n,n,b,n,n,n,n,b,b,n,n,n,b,b,b,b,b,n],
+                [n,n,b,b,b,n,n,n,b,n,n,n,n,n,b,n,n,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,n,n,b,n,n,n],
+                [n,b,b,n,n,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,b,n,b,n,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,b,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,b,b,n,n,n,n,n,n,n,n,b,n,n,e,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,b,n,n,n,n,n,n],
+                [n,b,b,b,b,b,n,n,n,n,n,b,n,n,n,n,n,n],
+                [n,b,n,n,n,n,n,n,n,n,n,b,n,n,n,n,n,n],
+                [n,b,b,n,n,n,n,n,n,n,n,b,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,b,b,b,b,b,n,n,n,n,n,n],
+                [n,n,n,n,n,n,e,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n]];
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel5)
+    }
+}
+
+object nivel_6{
+const nivel6 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,b,n,n],
+                [n,b,b,b,n,n,n,n,n,n,n,n,b,n,n,n,n,n],
+                [n,n,n,b,n,n,n,n,b,n,n,n,b,b,b,b,n,n],
+                [n,n,n,b,n,n,n,b,b,b,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,b,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,b,n,n,b,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,e,n,n,n,n,n,n,n],
+                [n,n,n,n,b,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,b,b,b,n,n,n],
+                [n,b,n,n,n,n,n,n,n,n,n,n,b,e,b,n,n,n],
+                [n,b,n,n,n,b,b,b,n,n,n,n,b,n,n,n,n,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,b,n,n,n,n,n],
+                [n,n,n,n,n,b,b,n,n,n,n,n,b,n,b,n,n,n],
+                [n,n,n,n,n,n,e,n,n,n,n,n,n,n,b,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n]];
+
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel6)
+    }
+}
+
+object nivel_7{
+const nivel7 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,b,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n,n,n],
+                [n,b,b,b,n,n,n,n,n,n,n,n,b,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,b,n,b,n,n],
+                [n,n,n,n,n,n,n,b,n,b,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,b,n,n,n,n,n,n,n,n,b,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,e,n,n,n,n,n,n,n],
+                [n,n,n,n,b,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,b,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,b,n,n,n,n,n,n,n,n,n,n,b,e,n,n,n,n],
+                [n,b,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,b,n,n,b,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,b,n,b,n,n,n],
+                [n,n,n,n,n,n,e,n,n,n,b,n,n,n,b,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n]];
+
+
+    method crear_nivel(){
+       niveles.generarEscenario(nivel7)
+    }
+}
+
+object nivel_8{
+const nivel8 = [[n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,n,n,e,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,e,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,b,b,b,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,e,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,b,n,n,n,n,n,n,n,n,n],
+                [n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n,n]];
+
+
+    method crear_nivel(){
+       self.mezclar_mapa()
+       niveles.generarEscenario(nivel8)
+    }
+
+    method mezclar_mapa(){
+        nivel8.forEach({lista => 
+            lista.randomize()
+        })
     }
 }

@@ -2,7 +2,8 @@ import muros.*
 import miscelaneos.*
 import niveles.*
 import jugador.*
-
+import menus.*
+import musica.*
 
 class Punto{
 	var property position = posicionAleatoria.generarPosicionAleatoria()
@@ -27,7 +28,23 @@ class Punto{
 		game.removeVisual(self)
 	}
 
-	method accion(_){}
+	method accion(_){
+		if(sincronizadorDePantallas.habilitar()){
+        self.eliminarPunto()
+        points.sumarPuntos()
+        if(points.puntosObtenidos() == 10){
+                spawn.dibujarPuntos(2)
+            }
+        if(points.puntosObtenidos() == 20){
+                spawn.dibujarPuntos(3)
+            }
+        if(points.puntosObtenidos() == 30){
+            sincronizadorDePantallas.cambiarPantalla("ganador")
+				musica.sonido_pause()
+                new MenuGanaste().cargar()
+            }  
+        }
+	}
 	method atacado(_){}
 }
 

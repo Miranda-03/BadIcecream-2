@@ -73,14 +73,14 @@ describe "Group of test for the enemy" {
 
   test "Should move"{
     const posicion_base = game.at(1, 2)
-    const enemy = new Enemigo1(vida = 100)
+    const enemy = new Enemigo1(vida = 100, y_inicial = 1, x_inicial = 1)
     game.addVisual(enemy)
-    enemy.nuevaPosicion()
+    enemy.direccion().mover(enemy.position())
     assert.notThat(posicion_base == enemy.position())
   }
 
   test "Should died" {
-    const enemy = new Enemigo1(vida = 100, position = game.at(1, 1))
+    const enemy = new Enemigo1(vida = 100, y_inicial = 1, x_inicial = 1)
     enemy.herido()
     enemy.herido()
     assert.equals(enemy.vida(), 0)

@@ -67,7 +67,7 @@ class MenuPersonaje inherits Menus(add = menuPersonajes, moverA = marcoDeSelecci
 	}
 }
 
-class MenuNivel inherits Menus(add = menuNiveles, moverA = new SeleccionNivel(), cantidadDeIncrementoParaPosiciones = 2, equisMax = 4, equisMin = 1, yeMax = 11, yeMin = 11, tipoDeMenu = "niveles"){
+class MenuNivel inherits Menus(add = menuNiveles, moverA = new SeleccionNivel(), cantidadDeIncrementoParaPosiciones = 2, equisMax = 14, equisMin = 1, yeMax = 11, yeMin = 11, tipoDeMenu = "niveles"){
 
     override method cargar(){
 		super()

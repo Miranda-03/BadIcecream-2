@@ -5,6 +5,7 @@ import enemigos.*
 import puntos.*
 import miscelaneos.*
 import niveles.*
+import menus.*
 
 object juego{
 //DIBUJO DE LOS ELEMENTOS DEL MUNDO    
